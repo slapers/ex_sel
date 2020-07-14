@@ -14,6 +14,21 @@ def deps do
 end
 ```
 
+## Basic Usage
+
+``` elixir
+iex> ExSel.aexpr("8 + 2 / 4")
+{:ok, {:+, [8, {:/, [2, 4]}]}}
+
+iex> ExSel.bexpr("8 + 2 > 4")
+{:ok, {:>, [{:+, [8, 2]}, 4]}}
+
+iex> {:ok, ast} = ExSel.aexpr("varA + varB / 4")
+iex> my_vars = %{"varA" => 8, "varB" => 2}
+iex> ExSel.eval!(ast, my_vars)
+8.5
+```
+
 Documentation can be found at [https://hexdocs.pm/ex_sel](https://hexdocs.pm/ex_sel).
 
 ## License
