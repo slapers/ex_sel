@@ -44,18 +44,21 @@ defmodule ExSel.Parser do
 
   vexpr_str =
     ignore(ascii_char([?"]))
-    |> repeat_until(
+    |> repeat_while(
       utf8_char([]),
-      [ascii_char([?"])]
+      {:not_quote, []}
     )
     |> ignore(ascii_char([?"]))
     |> reduce({List, :to_string, []})
     |> label("string")
 
+  defp not_quote(<<?", _::binary>>, context, _, _), do: {:halt, context}
+  defp not_quote(_, context, _, _), do: {:cont, context}
+
   vexpr_var =
     ascii_char([?a..?z])
     |> repeat(ascii_char([?a..?z, ?A..?Z, ?0..?9, ?_]))
-    |> traverse(:to_varname)
+    |> post_traverse(:to_varname)
     |> unwrap_and_tag(:var)
     |> label("variable")
 
