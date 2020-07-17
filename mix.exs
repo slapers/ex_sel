@@ -27,7 +27,7 @@ defmodule ExSel.MixProject do
 
   defp deps do
     [
-      {:nimble_parsec, "~> 0.4"},
+      {:nimble_parsec, "~> 0.6.0"},
       {:stream_data, "~> 0.1", only: :test},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.18.0", only: :dev, runtime: false}
